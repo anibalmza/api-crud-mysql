@@ -1,0 +1,27 @@
+{routes//persona.js}
+GET POST
+http://localhost:3000/persona
+
+GET PUT DELETE
+http://localhost:3000/persona/:id
+
+GET obtener todas las personas con propiedades
+http://localhost:3000/persona/ver/propiedad
+GET obtener las propiedades de una persona
+http://localhost:3000/persona/:id/propiedad
+
+----------------------------------
+{routes//propiedad.js}
+GET POST
+http://localhost:3000/propiedad
+
+GET PUT DELETE
+http://localhost:3000/propiedad/:id
+
+-----------------------------------
+{routes//zona.js}
+GET POST
+http://localhost:3000/zona
+
+GET PUT DELETE
+http://localhost:3000/zona/:id
