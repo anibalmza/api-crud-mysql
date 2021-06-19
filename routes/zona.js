@@ -4,80 +4,91 @@ const pool = require('../database');
 
 router.get('/', async(req,res)=>{
    const datos = await pool.query('SELECT * FROM zona');
-   // res.json(datos);
-   res.json({
-      status: 'success',
-      codigo: res.statusCode,
-      message: 'Exito en la solicitud del usuario',
-      data: datos
-   })
-   console.log('READ ALL ok');
-   console.log("statusCode: ", res.statusCode);
+   if(datos.length > 0){
+      res.json({
+         codigo : res.statusCode,
+         status : 'success',         
+         message: 'Exito en la petición GET - Todas las zonas',
+         data: datos
+      });
+      console.log("read all OK - statusCode: ", res.statusCode);
+   }else{
+      res.json("No hay zonas registradas");
+      console.log("No hay zonas registradas");
+   }
 });
 
 router.get('/:id', async(req,res)=>{
    const { id } = req.params;
    const datos = await pool.query('SELECT * FROM zona WHERE id = ?',[id]);
-   // res.json(datos);
-   res.json({
-      status: 'success',
-      codigo: res.statusCode,
-      message: 'Exito en la solicitud del usuario',
-      data: datos
-   })
-   console.log('READ ok');
-   console.log("statusCode: ", res.statusCode);
+   if(datos.length > 0){
+      res.json({
+         codigo: res.statusCode,
+         status: 'success',         
+         message: 'Exito en la petición GET - Una zona',
+         data: datos
+      });
+      console.log("read OK - statusCode: ", res.statusCode);
+   }else{
+      res.json("zona No encontrada");
+      console.log("zona No encontrada");
+   }
 });
 
 router.post('/', async (req, res) => {
-   const { nombre,descripcion } = req.body;
+   const { zona,descripcion } = req.body;
    const newZona = {
-      nombre,
+      zona,
       descripcion
    };
-   await pool.query('INSERT INTO zona set ?', [newZona]);
-   // res.json('INSERT ok');
-   res.json({
-      status: 'success',
-      codigo: res.statusCode,
-      message: 'Exito en la solicitud del usuario',
-      // data: datos
-   })
-   console.log('INSERT ok');
-   console.log("statusCode: ", res.statusCode);
+   const datos = await pool.query('INSERT INTO zona set ?', [newZona]);
+   if(datos.affectedRows > 0){   
+      res.json({
+         codigo: 201,
+         status: 'success',         
+         message: 'Exito en la petición POST',
+         data: newZona
+      })
+      console.log("INSERT ok - statusCode: ", res.statusCode);
+   }
 });
 
 router.put('/:id', async (req, res) => {
    const { id } = req.params;
-   const { nombre,descripcion } = req.body;
+   const { zona,descripcion } = req.body;
    const newZona = {
-      nombre,
+      zona,
       descripcion
    };
-   await pool.query('UPDATE zona set ? WHERE id = ?', [newZona, id]);
-   // res.json('UPDATE ok');
-   res.json({
-      status: 'success',
-      codigo: res.statusCode,
-      message: 'Exito en la solicitud del usuario',
-      // data: datos
-   })
-   console.log('UPDATE ok');
-   console.log("statusCode: ", res.statusCode);
+   const datos = await pool.query('UPDATE zona set ? WHERE id = ?', [newZona, id]);
+   if(datos.affectedRows > 0){
+      res.json({
+         codigo: 204,
+         status: 'success',
+         message: 'Exito en la petición PUT',
+         data: newZona
+      })
+      console.log("UPDATE ok - statusCode: ", res.statusCode);
+   }else{
+      res.json("zona No encontrada");
+      console.log("zona No encontrada");
+   }
 });
 
 router.delete('/:id', async (req, res) => {
    const { id } = req.params;
-   await pool.query('DELETE FROM zona WHERE id = ?', [id]);
-   // res.json('DELETE ok');
-   res.json({
-      status: 'success',
-      codigo: res.statusCode,
-      message: 'Exito en la solicitud del usuario',
-      // data: datos
-   })
-   console.log('DELETE ok');
-   console.log("statusCode: ", res.statusCode);
+   const datos = await pool.query('DELETE FROM zona WHERE id = ?', [id]);
+   if(datos.affectedRows > 0){
+      res.json({
+         codigo : res.statusCode,
+         status : 'success',         
+         message: 'Exito en la petición DELETE'
+      })
+      console.log("DELETE ok - statusCode: ", res.statusCode);
+   }else{
+    res.json("zona No encontrada");
+    console.log("zona No encontrada");
+   }
 });
 
 module.exports = router;

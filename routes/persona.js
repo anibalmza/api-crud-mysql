@@ -59,9 +59,9 @@ router.post('/', async (req, res) => {
         if (err){
             throw err;
         }else{    
+            // console.log("resultado->", result)
             // console.log("resultado->", result.affectedRows)        
-            if(result.affectedRows > 0){
-                console.log("resultado->", result)
+            if(result.affectedRows > 0){                
                 res.json({
                     codigo: 201,
                     status: 'success',
@@ -129,7 +129,6 @@ router.delete('/:id', async (req, res) => {
 router.get('/ver/propiedad', async(req, res)=>{
     //console.log('Persona + Propiedad');
     var sql = "SELECT p.apellido, p.nombre, d.tipo, d.domicilio, d.numero, z.zona, z.descripcion FROM persona p JOIN propiedad d ON p.id = d.persona_id JOIN zona z ON d.zona_id = z.id ORDER BY p.apellido";    
-    
     const datos = await pool.query(sql,(err,result)=>{
         if (err){
             throw err;

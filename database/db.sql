@@ -10,8 +10,7 @@ CREATE TABLE persona(
   direccion varchar(30) DEFAULT NULL,
   PRIMARY KEY (id)
 )
-COLLATE='latin1_swedish_ci'
-);
+COLLATE='latin1_swedish_ci';
 
 USE inmobi_app;
 CREATE TABLE zona(
@@ -20,8 +19,7 @@ CREATE TABLE zona(
 	descripcion VARCHAR(100) NOT NULL,
   PRIMARY KEY (id)
 )
-COLLATE='latin1_swedish_ci'
-;
+COLLATE='latin1_swedish_ci';
 
 USE inmobi_app;
 CREATE TABLE propiedad(
@@ -35,8 +33,7 @@ CREATE TABLE propiedad(
   CONSTRAINT fk_persona FOREIGN KEY (persona_id) REFERENCES persona(id),
   CONSTRAINT fk_zona FOREIGN KEY (zona_id) REFERENCES zona(id)
 )
-COLLATE='latin1_swedish_ci'
-);
+COLLATE='latin1_swedish_ci';
 
 
 
